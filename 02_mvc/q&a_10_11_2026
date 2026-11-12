@@ -1,0 +1,7 @@
+Q1: pattern observé dans les methodes du modèle: sql queries renvoyant un tableau d'erreurs si aucun record extrait.
+    est la gestion des messages d'erreurs compétence du modèle? pas dans les controleurs?
+
+Q2: différence entre this et parent;
+    si j'ai bien compris: 
+    - "this" quand il n'y a pas de override (il piochera de toute facon la méthode de la super-classe)
+    - "parent" si il y a override mais on choisit de solliciter la méthode de la super-classe

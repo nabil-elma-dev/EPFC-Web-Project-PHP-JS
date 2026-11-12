@@ -1,13 +1,10 @@
 <?php
-
-require_once "functions.php";
-require_once "model/Member.php";
-require_once "framework/Configuration.php";
-
-get_user_id_or_redirect();
-$members = Member::get_members();
-$web_root = Configuration::get("web_root");
+/**
+ * @var string $web_root
+ * @var Member[] $members
+ */
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +16,7 @@ $web_root = Configuration::get("web_root");
     </head>
     <body>
         <div class="title">Members</div>
-        <?php include("view/menu.html"); ?>
+        <?php include("menu.html"); ?>
         <div class="main">
             <ul>
                 <?php foreach ($members as $member): ?>
