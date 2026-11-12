@@ -37,4 +37,41 @@ class ControllerMain extends Controller {
             "errors" => $errors,
         ]);
     }
+
+    /** Création du membre + login si tous les champs sont validés **/
+    public function signup(): void {
+        $pseudo = $_POST["pseudo"] ?? null;
+        $password = $_POST["password"] ?? null;
+        $password_confirm = $_POST["password_confirm"] ?? null;
+        $errors = [];
+        
+        if ($pseudo !== null && $password !== null && $password_confirm !== null) {
+            $pseudo = trim($pseudo);
+            $password = trim($password);
+            $password_confirm = trim($password_confirm);
+
+            $member = new Member($pseudo, "");
+            $errors = [
+                ...$member->validate(),
+                ...Member::validate_passwords($password, $password_confirm),
+                ...Member::validate_unique_pseudo($pseudo),
+            ];
+            if ($errors === []) {
+                $member->set_hashed_password(password_hash($password, PASSWORD_BCRYPT));
+                $errors = $member->persist();
+            }
+            if ($errors === []) {
+                $this->log_user($member);
+            }
+        }
+
+        (new View("signup"))->show([
+            "pseudo" => $pseudo ?? "",
+            "password" => $password ?? "",
+            "password_confirm" => $password_confirm,
+            "errors" => $errors
+        ]);
+        
+
+    }
 }

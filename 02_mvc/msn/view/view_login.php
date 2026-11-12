@@ -19,7 +19,7 @@
         <div class="title">Log In</div>
         <div class="menu">
             <a href="main/index">Home</a>
-            <a href="signup.php">Sign Up</a>
+            <a href="main/signup">Sign Up</a>
         </div>
         <div class="main">
             <form action="main/login" method="post">

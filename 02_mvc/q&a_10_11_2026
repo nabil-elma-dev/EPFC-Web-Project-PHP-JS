@@ -5,3 +5,11 @@ Q2: différence entre this et parent;
     si j'ai bien compris: 
     - "this" quand il n'y a pas de override (il piochera de toute facon la méthode de la super-classe)
     - "parent" si il y a override mais on choisit de solliciter la méthode de la super-classe
+
+Q3: Notation avec "..."
+    example avec methode signup sur ControllerMain:
+    $errors = [
+        ...$member->validate(),
+        ...Member::validate_passwords($password, $password_confirm),
+        ...Member::validate_unique_pseudo($pseudo),
+    ];

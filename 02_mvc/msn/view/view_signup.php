@@ -1,36 +1,13 @@
-<?php
-
-require_once "functions.php";
-require_once "model/Member.php";
-require_once "framework/Configuration.php";
-
-$pseudo = $_POST["pseudo"] ?? null;
-$password = $_POST["password"] ?? null;
-$password_confirm = $_POST["password_confirm"] ?? null;
-$errors = [];
-
-if ($pseudo !== null && $password !== null && $password_confirm !== null) {
-    $pseudo = trim($pseudo);
-    $password = trim($password);
-    $password_confirm = trim($password_confirm);
-
-    $member = new Member($pseudo, "");
-    $errors = [
-        ...$member->validate(),
-        ...Member::validate_passwords($password, $password_confirm),
-        ...Member::validate_unique_pseudo($pseudo),
-    ];
-    if ($errors === []) {
-        $member->set_hashed_password(password_hash($password, PASSWORD_BCRYPT));
-        $errors = $member->persist();
-    }
-    if ($errors === []) {
-        log_user($member);
-    }
-}
-
-$web_root = Configuration::get("web_root");
+<?php 
+/**
+ * @var string $web_root
+ * @var string $pseudo
+ * @var string $password
+ * @var string $password_confirm
+ * @var string[] $errors
+ */
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,7 +25,7 @@ $web_root = Configuration::get("web_root");
         <div class="main">
             Please enter your details to sign up :
             <br><br>
-            <form id="signup_form" action="signup.php" method="post">
+            <form id="signup_form" action="main/signup" method="post">
                 <table>
                     <tr>
                         <td>Pseudo:</td>
