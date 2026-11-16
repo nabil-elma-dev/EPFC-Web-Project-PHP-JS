@@ -13,3 +13,20 @@ Q3: Notation avec "..."
         ...Member::validate_passwords($password, $password_confirm),
         ...Member::validate_unique_pseudo($pseudo),
     ];
+
+
+Q4: clarification sémantique d'un point de la partie "portage de la page signup.php"
+
+    "Le routeur a déjà retiré les espaces des champs POST, sans échapper le HTML. 
+     Dans le contrôleur, reprenez donc les valeurs telles quelles. 
+     Le trim encore présent dans signup.php ne sert que tant que cette page ne passe pas par le routeur."
+
+    faudra effacer le trim? (voir méthode signup du ControllerMain)
+                        |
+                        V
+    if ($pseudo !== null && $password !== null && $password_confirm !== null) {
+            $pseudo = trim($pseudo);
+            $password = trim($password);
+            $password_confirm = trim($password_confirm);
+            ...
+
