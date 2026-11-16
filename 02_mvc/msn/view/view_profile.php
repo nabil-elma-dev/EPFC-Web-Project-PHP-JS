@@ -31,7 +31,7 @@
             <?php endif; ?>
             <br>
             <br>
-            <a href="messages.php?param1=<?= e($member->get_pseudo()) ?>">View <?= e($member->get_pseudo()) ?>'s messages</a>
+            <a href="message/index/<?= e($member->get_pseudo()) ?>">View <?= e($member->get_pseudo()) ?>'s messages</a>
         </div>
     </body>
 </html>

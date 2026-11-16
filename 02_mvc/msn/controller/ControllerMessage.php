@@ -6,19 +6,12 @@
     
     class ControllerMessage extends Controller {
         public function index(): void {
-            /**
-             * TASK 1
-             * displaying messages from connected member OR user given as param1
-             * 
-             * Tools: Member::get_messages();
-            */
-
             // Grabbing user in session
             $user = Member::get_by_id($this->get_user_id_or_redirect());
         
             // Grabbing recipient (either user in session OR param1)
             $recipient = isset($_GET["param1"]) ?
-                Member::get_member_by_pseudo(trim($_GET["param1"]))
+                Member::get_member_by_pseudo($_GET["param1"])
                 : $user; 
             
             // Doublecheck on $recipient (get_member_by_pseudo method might return false)
@@ -33,7 +26,7 @@
             
             if ($body !== null) {
                 $private = isset($_POST["private"]);
-                $message = new Message($user, $recipient, trim($body), $private);
+                $message = new Message($user, $recipient, $body, $private);
                 $errors = $message->validate();
                 if ($errors === []) {
                     $errors = $user->write_message($message);

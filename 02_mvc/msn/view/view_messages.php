@@ -1,11 +1,11 @@
 <?php
 /**
- * @var Member $user
  * @var string $web_root
- * @var string $recipient
+ * @var Member $user
+ * @var Member $recipient
+ * @var string[] $errors
  * @var string $body
  * @var bool $private
- * @var string[] $errors
  */
 ?>
 
@@ -58,7 +58,7 @@
                             <td><input type="checkbox" disabled <?= ($message->is_private() ? " checked" : "") ?>></td>
                             <td>
                                 <?php if ($message->can_be_deleted_by($user)): ?>
-                                    <form class="link" action="messages.php?action=delete" method="post">
+                                    <form class="link" action="message/delete" method="post">
                                         <input type="text" name="id_message" value="<?= e($message->get_post_id()) ?>" hidden>
                                         <input type="submit" value="erase">
                                     </form>
