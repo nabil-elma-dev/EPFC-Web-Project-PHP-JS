@@ -46,9 +46,9 @@ class ControllerMain extends Controller {
         $errors = [];
         
         if ($pseudo !== null && $password !== null && $password_confirm !== null) {
-            $pseudo = trim($pseudo);
-            $password = trim($password);
-            $password_confirm = trim($password_confirm);
+            $pseudo = $pseudo;
+            $password = $password;
+            $password_confirm = $password_confirm;
 
             $member = new Member($pseudo, "");
             $errors = [

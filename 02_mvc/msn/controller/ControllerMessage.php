@@ -19,7 +19,7 @@
                 $user
                 : $recipient;
 
-            // 
+            // Initiating variables body, private to structure new Message object && errors if models returns any
             $body = $_POST["body"] ?? null;
             $private = false;
             $errors = [];
@@ -45,15 +45,18 @@
             );
         }
 
-        public function delete(): void{
-            // Phase 1 : verifying $_POST["id_message"]
-            // Phase 2 : exception (if not valid) OR delete method 
-            // Phase 3 : redirect towards recipient messages after successfull delete 
+        public function delete(): void {  
+            $user = Member::get_by_id($this->get_user_id_or_redirect());  
+            $post_id = filter_var($_POST["id_message"] ?? "", FILTER_VALIDATE_INT);
+            if ($post_id === false) {
+                Tools::abort("Wrong/missing param or action no permitted");
+            } 
+            $message = Message::get_message($post_id);
+            if ($message === false || !$message->can_be_deleted_by($user)) {
+                Tools::abort("Wrong/missing param or action no permitted");
+            }
+            $message->delete($user);
+            $this->redirect("message", "index", $message->get_recipient()->get_pseudo()); 
         }
-
-        /*
-        
-            
-        */
     }
 ?>

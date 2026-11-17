@@ -1,12 +1,12 @@
-Q1: pattern observé dans les methodes du modèle: sql queries renvoyant un tableau d'erreurs si aucun record extrait.
-    est la gestion des messages d'erreurs compétence du modèle? pas dans les controleurs?
+Q1: pattern observé dans plusieurs methodes des modèles: return d'un tableau d'erreurs si aucun record n'a été extrait.
+    est la gestion des messages d'erreurs compétence du modèle?
 
 Q2: différence entre this et parent;
     si j'ai bien compris: 
     - "this" quand il n'y a pas de override (il piochera de toute facon la méthode de la super-classe)
-    - "parent" si il y a override mais on choisit de solliciter la méthode de la super-classe
+    - "parent" s'il y a override mais on choisit délibérément de solliciter la méthode de la super-classe
 
-Q3: Notation avec "..."
+Q3: Clarification sémantique de la notation "..."
     example avec methode signup sur ControllerMain:
     $errors = [
         ...$member->validate(),
@@ -14,19 +14,11 @@ Q3: Notation avec "..."
         ...Member::validate_unique_pseudo($pseudo),
     ];
 
+Q4: Trim sur les passwords lors du signup
+    Context: "À l'exception de trim() (...) il ne faut jamais altérer le contenu (...)avant l'insertion en base" - Dynamisme serveur, slide 26
 
-Q4: clarification sémantique d'un point de la partie "portage de la page signup.php"
+    Tel premise, appliquée sur le mot de passe, nous expose à quelque contradiction:
 
-    "Le routeur a déjà retiré les espaces des champs POST, sans échapper le HTML. 
-     Dans le contrôleur, reprenez donc les valeurs telles quelles. 
-     Le trim encore présent dans signup.php ne sert que tant que cette page ne passe pas par le routeur."
-
-    faudra effacer le trim? (voir méthode signup du ControllerMain)
-                        |
-                        V
-    if ($pseudo !== null && $password !== null && $password_confirm !== null) {
-            $pseudo = trim($pseudo);
-            $password = trim($password);
-            $password_confirm = trim($password_confirm);
-            ...
-
+        a) Le mot de passe stocké en base de données et différent du mot de passe que l'utilisateur croit avoir enregistré. Il serait donc incapable de se connecter a moins qu'il effectue lui-meme un "trim manuel".
+        
+        b) En cas de divergence de $password et $password_confirm due uniquement à un nombre différent d'espaces vides (avant ou après), la méthode "validate_passwords" les comparant ne renverrai aucun error (en raison du trim appliqué par le router).
