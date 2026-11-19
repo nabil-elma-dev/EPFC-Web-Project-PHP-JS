@@ -69,9 +69,11 @@ class ControllerMember extends Controller {
     public function members() : void {
         $member_id = $this->get_user_id_or_redirect();
         $member_in_session = Member::get_by_id($member_id);
+        $other_members_and_relationships = $member_in_session->get_other_members_and_relationships();
         $members = Member::get_members();
         (new View("members"))->show(["members" => $members, 
-                                      "member_in_session" => $member_in_session
+                                      "member_in_session" => $member_in_session,
+                                      "other_members_and_relationships" => $other_members_and_relationships
         ]);
     }
 

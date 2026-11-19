@@ -21,13 +21,11 @@
         <div class="main">
             <ul>
             <?php  
-                $other_members_and_relationships = $member_in_session->get_other_members_and_relationships();
                 foreach ($other_members_and_relationships as $other_member):
             ?>
                 <li>
                     <table>
                         <tr>
-                            <!--  --> 
                             <td>
                                 <a href="member/profile/<?= e($other_member["pseudo"]) ?>"> <?=e($other_member["pseudo"]) ?> </a>
                             </td>
