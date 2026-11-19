@@ -67,8 +67,19 @@ class ControllerMember extends Controller {
 
     /** Affiche la liste des membres. **/ 
     public function members() : void {
-        $this->get_user_id_or_redirect();
+        $member_id = $this->get_user_id_or_redirect();
+        $member_in_session = Member::get_by_id($member_id);
         $members = Member::get_members();
-        (new View("members"))->show(["members" => $members]);
+        (new View("members"))->show(["members" => $members, 
+                                      "member_in_session" => $member_in_session
+        ]);
+    }
+
+    public function follow() : void {
+
+    }
+
+    public function unfollow() : void {
+        
     }
 }

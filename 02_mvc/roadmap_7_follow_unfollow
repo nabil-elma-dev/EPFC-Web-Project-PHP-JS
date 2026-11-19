@@ -1,0 +1,10 @@
+- form in view_members.php calling either "follow" or "unfollow" from ControllerMember.php 
+  (according to return of method "follows" of Member model); (if/else probably)
+
+- key method: get_other_members_and_relationships(); 
+  returns 3 fields:
+    a) pseudo : list of all pseudo;
+    b) i_follow : count(*) of user's follower (either 0 or 1)
+    c) follows_me : count(*) user follows (either 0 or 1)
+
+

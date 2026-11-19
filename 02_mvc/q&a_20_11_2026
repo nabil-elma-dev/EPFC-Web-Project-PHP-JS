@@ -1,9 +1,10 @@
 Q1: pattern observé dans plusieurs methodes des modèles: return d'un tableau d'erreurs si aucun record n'a été extrait.
     est la gestion des messages d'erreurs compétence du modèle?
+    - "parent" s'il y a override mais on choisit délibérément de solliciter la méthode de la super-classe
 
 Q2: différence entre this et parent;
     si j'ai bien compris: 
-    - "this" quand il n'y a pas de override (il piochera de toute facon la méthode de la super-classe)
+    - "this" quand il n'y a pas de override (de toute facon la méthode de la super-classe sera selectionnée)
     - "parent" s'il y a override mais on choisit délibérément de solliciter la méthode de la super-classe
 
 Q3: Clarification sémantique de la notation "..."
@@ -22,3 +23,5 @@ Q4: Trim sur les passwords lors du signup
         a) Le mot de passe stocké en base de données et différent du mot de passe que l'utilisateur croit avoir enregistré. Il serait donc incapable de se connecter a moins qu'il effectue lui-meme un "trim manuel".
         
         b) En cas de divergence de $password et $password_confirm due uniquement à un nombre différent d'espaces vides (avant ou après), la méthode "validate_passwords" les comparant ne renverrai aucun error (en raison du trim appliqué par le router).
+
+Q5: in-depth sql query de la méthode get_other_members_and_relationships()
