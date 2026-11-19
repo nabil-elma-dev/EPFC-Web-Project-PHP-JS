@@ -76,10 +76,26 @@ class ControllerMember extends Controller {
     }
 
     public function follow() : void {
-
+        $member_id = $this->get_user_id_or_redirect();
+        $member_in_session = Member::get_by_id($member_id);
+        $user_to_follow_string = $_POST["user_to_follow"] ?? null;
+        if ($user_to_follow_string === null || $user_to_follow_string === "") {
+            Tools::abort("Wrong/missing param or action no permitted");
+        }
+        $user_to_follow = Member::get_member_by_pseudo($user_to_follow_string);
+        $member_in_session->follow($user_to_follow);
+        $this->redirect("member", "members");
     }
 
     public function unfollow() : void {
-        
+        $member_id = $this->get_user_id_or_redirect();
+        $member_in_session = Member::get_by_id($member_id);
+        $user_to_unfollow_string = $_POST["user_to_unfollow"] ?? null;
+        if ($user_to_unfollow_string === null || $user_to_unfollow_string === "") {
+            Tools::abort("Wrong/missing param or action no permitted");
+        }
+        $user_to_unfollow = Member::get_member_by_pseudo($user_to_unfollow_string);
+        $member_in_session->unfollow($user_to_unfollow);
+        $this->redirect("member", "members");
     }
 }
