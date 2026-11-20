@@ -77,6 +77,35 @@ class ControllerMember extends Controller {
         ]);
     }
 
+    public function friends() : void {
+        $member_id = $this->get_user_id_or_redirect();
+        $member_in_session = Member::get_by_id($member_id);
+        $other_members_and_relationships = $member_in_session->get_other_members_and_relationships();
+        $mutual_friends = [];
+        $followers = [];
+        $followed = [];
+        
+        foreach ($other_members_and_relationships as $other_member) {
+            if ($other_member["i_follow"] === 1 && $other_member["follows_me"] === 1) {
+                $mutual_friends[] = $other_member["pseudo"];
+            } elseif ($other_member["i_follow"] === 1) {
+                $followed[] = $other_member["pseudo"];
+            } elseif ($other_member["follows_me"] === 1) {
+                $followers[] = $other_member["pseudo"];
+            }
+        } 
+
+        $arrays_are_empty = count($mutual_friends) === 0 && count($followers) === 0 && count($followed) === 0;
+
+
+        (new View("friends"))->show(["member_in_session" => $member_in_session,
+                                     "mutual_friends" => $mutual_friends,
+                                     "followed" => $followed,
+                                     "followers" => $followers,
+                                     "arrays_are_empty" => $arrays_are_empty
+        ]);
+    }
+
     public function follow() : void {
         $member_id = $this->get_user_id_or_redirect();
         $member_in_session = Member::get_by_id($member_id);

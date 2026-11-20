@@ -3,6 +3,7 @@
  * @var string $web_root
  * @var Member[] $members
  * @var Member $member_in_session
+ * @var array $other_members_and_relationships
  */
 ?>
 
